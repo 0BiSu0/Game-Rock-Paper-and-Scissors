@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .game-container {
+            margin-top: 50px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .choices button {
+            font-size: 1.5em;
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .choices button:hover {
+            background-color: #45a049;
+        }
+        
+        .result p, .result h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        
+        .score p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors</h1>
+        <div class="choices">
+            <button id="rock">Rock 🪨</button>
+            <button id="paper">Paper 📄</button>
+            <button id="scissors">Scissors ✂️</button>
+        </div>
+        <div class="result">
+            <p id="user-choice">Your choice: </p>
+            <p id="computer-choice">Computer's choice: </p>
+            <h2 id="winner">Winner: </h2>
+        </div>
+        <div class="score">
+            <p id="user-score">Your Score: 0</p>
+            <p id="computer-score">Computer Score: 0</p>
+        </div>
+    </div>
+   <script>
+    // Các lựa chọn có thể
+const choices = ["rock", "paper", "scissors"];
+
+// Lấy các phần tử HTML
+const userChoiceDisplay = document.getElementById("user-choice");
+const computerChoiceDisplay = document.getElementById("computer-choice");
+const winnerDisplay = document.getElementById("winner");
+const userScoreDisplay = document.getElementById("user-score");
+const computerScoreDisplay = document.getElementById("computer-score");
+
+let userScore = 0;
+let computerScore = 0;
+
+// Gán sự kiện cho các nút
+document.getElementById("rock").addEventListener("click", function() { playGame("rock"); });
+document.getElementById("paper").addEventListener("click", function() { playGame("paper"); });
+document.getElementById("scissors").addEventListener("click", function() { playGame("scissors"); });
+
+function playGame(userChoice) {
+    const computerChoice = getComputerChoice();
+    const winner = getWinner(userChoice, computerChoice);
+
+    // Hiển thị lựa chọn của người chơi và máy tính
+    userChoiceDisplay.textContent = `Your choice: ${userChoice}`;
+    computerChoiceDisplay.textContent = `Computer's choice: ${computerChoice}`;
+
+    // Hiển thị người thắng cuộc
+    if (winner === "user") {
+        winnerDisplay.textContent = "Winner: You!";
+        userScore++;
+    } else if (winner === "computer") {
+        winnerDisplay.textContent = "Winner: Computer!";
+        computerScore++;
+    } else {
+        winnerDisplay.textContent = "It's a tie!";
+    }
+
+    // Cập nhật điểm
+    userScoreDisplay.textContent = `Your Score: ${userScore}`;
+    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+}
+
+function getComputerChoice() {
+    const randomIndex = Math.floor(Math.random() * choices.length);
+    return choices[randomIndex];
+}
+
+function getWinner(userChoice, computerChoice) {
+    if (userChoice === computerChoice) {
+        return "tie";
+    }
+
+    if (
+        (userChoice === "rock" && computerChoice === "scissors") ||
+        (userChoice === "paper" && computerChoice === "rock") ||
+        (userChoice === "scissors" && computerChoice === "paper")
+    ) {
+        return "user";
+    } else {
+        return "computer";
+    }
+}
+   </script>
+</body>
+</html>
